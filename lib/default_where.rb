@@ -18,7 +18,7 @@ module DefaultWhere
     return all if params.blank?
 
     where_params = filter_where(params)
-    params, refs, tables = params_with_table(params, options)
+    params, refs, tables = params_with_table(params.reject{ |k,v| where_params.include?(k)}, options)
 
     range_params = filter_range(params)
     order_params = filter_order(params)
