@@ -70,9 +70,9 @@ module DefaultWhere
           tables << as_model.klass.table_name
         elsif connection.tables.include? table
           tables << table
-          keys = reflections.select { |_, v| v.table_name == table }.keys
+          keys = reflections.select { |_, v| !v.polymorphic? && v.table_name == table }.keys
           if keys && keys.size == 1
-            refs << keys.first
+            refs << keys.first.to_sym
           end
           next
         else
